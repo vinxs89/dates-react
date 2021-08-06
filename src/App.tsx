@@ -1,57 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'; 
 import './App.css';
+import { Card, CardUser } from './features/cards/Card';
+import { Likes } from './features/likes/Likes';
+import { Chat } from './features/chat/Chat';
+import { Profile } from './features/profile/Profile';
+import { Nav } from './features/nav/Nav';
+import foto1 from './assets/foto1.png';
+import foto2 from './assets/foto2.png';
 
 function App() {
+  const cardUser: CardUser = {
+    id: '',
+    images: [foto1, foto2]
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="app">
+          <main className="app__main">
+            <Switch>
+              <Route exact path="/cards">
+                <Card user={cardUser} />
+              </Route>
+              <Route path="/likes" component={Likes} />
+              <Route exact path="/chat" component={Chat} />
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/"><Redirect to="/cards" /></Route>
+            </Switch>
+          </main>
+          <section className="app__nav">
+            <Nav />
+          </section>
+      </div>
+    </BrowserRouter>
   );
 }
 
